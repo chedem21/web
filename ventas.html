@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ventas</title>
+</head>
+<body>
+	<form id="formulario-ventas">
+		<label>Fecha y Hora:</label>
+		<input type="datetime-local" id="fecha-hora">
+		<label>Número de Mesa:</label>
+		<input type="number" id="numero-mesa">
+		<label>Cliente:</label>
+		<input type="text" id="cliente">
+		<label>Plato:</label>
+		<input type="text" id="plato">
+		<label>Precio:</label>
+		<input type="number" id="precio">
+		<button id="boton-enviar">Enviar</button>
+	</form>
+
+	<script>
+		document.getElementById('boton-enviar').addEventListener('click', function() {
+			var fechaHora = document.getElementById('fecha-hora').value;
+			var numeroMesa = document.getElementById('numero-mesa').value;
+			var cliente = document.getElementById('cliente').value;
+			var plato = document.getElementById('plato').value;
+			var precio = document.getElementById('precio').value;
+
+			var datos = {
+				fechaHora: fechaHora,
+				numeroMesa: numeroMesa,
+				cliente: cliente,
+				plato: plato,
+				precio: precio
+			};
+
+			fetch('guardar_venta.php', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(datos)
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error(error));
+		});
+	</script>
+</body>
+</html>
